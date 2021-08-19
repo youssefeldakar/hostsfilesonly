@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+
+# Set 'files' as the only source for name resolution for hosts
+
+# Root access obviously required
+
+if [ "$#" -ne 1 ] || [ "$1" != 1 ] && [ "$1" != 0 ]; then
+  echo "Usage: hostsfilesonly 1|0" >&2
+  exit 1
+fi
+
+  if [ "$1" = 1 ]; then
+    sed -i 's/^\(hosts:[ \t]\+files[ \t]\+\)\([^#].*\)/\1#\2/' /etc/nsswitch.conf
+    echo "Files only" >&2
+elif [ "$1" = 0 ]; then
+    sed -i 's/^\(hosts:[ \t]\+files[ \t]\+\)#\([^#].*\)/\1\2/' /etc/nsswitch.conf
+    echo "Cleared" >&2
+  fi
