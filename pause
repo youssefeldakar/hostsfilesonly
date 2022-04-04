@@ -11,4 +11,4 @@ echo "Waiting..." >&2
 sleep "$1"
 "$(dirname "$0")/hostsfilesonly" 1
 
-killall firefox
+killall -q firefox || killall -q GeckoMain
